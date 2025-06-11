@@ -219,7 +219,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Boliteros App</h1>
+            <h1>osmaanyp</h1>
             <p>Análisis de loterías: Florida, Georgia y New York</p>
         </header>
         
