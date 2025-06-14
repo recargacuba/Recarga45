@@ -6,9 +6,6 @@
     <title>MarketWhats - Compra y vende con WhatsApp</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
     <style>
         :root {
             --primary: #25D366;
@@ -388,6 +385,87 @@
             text-decoration: none;
         }
 
+        /* Seller Dashboard */
+        .dashboard {
+            display: none;
+            padding: 5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .dashboard-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* Product Form */
+        .product-form {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        /* Alert messages */
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .loader-spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         /* Footer */
         footer {
             background: var(--dark);
@@ -523,6 +601,11 @@
                 padding: 0.8rem 1.2rem;
                 font-size: 1rem;
             }
+
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
         }
 
         @media (max-width: 480px) {
@@ -620,74 +703,8 @@
                 <h2>Productos Destacados</h2>
                 <p>Descubre lo que otros usuarios están vendiendo cerca de ti</p>
             </div>
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="iPhone 12" class="product-img">
-                    <div class="product-info">
-                        <div class="product-category">Tecnología</div>
-                        <h3 class="product-title">iPhone 12 Pro Max 256GB</h3>
-                        <div class="product-price">$850</div>
-                        <div class="product-seller">
-                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vendedor" class="seller-avatar">
-                            <span>Juan Pérez</span>
-                        </div>
-                        <a href="https://wa.me/15551234567?text=Hola%20Juan,%20estoy%20interesado%20en%20el%20iPhone%2012%20Pro%20Max" class="whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1566150902887-9679ecc155ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Bicicleta" class="product-img">
-                    <div class="product-info">
-                        <div class="product-category">Deportes</div>
-                        <h3 class="product-title">Bicicleta Montañera Profesional</h3>
-                        <div class="product-price">$320</div>
-                        <div class="product-seller">
-                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Vendedora" class="seller-avatar">
-                            <span>María Rodríguez</span>
-                        </div>
-                        <a href="https://wa.me/15551234568?text=Hola%20María,%20estoy%20interesado%20en%20la%20bicicleta" class="whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Reloj" class="product-img">
-                    <div class="product-info">
-                        <div class="product-category">Accesorios</div>
-                        <h3 class="product-title">Reloj Inteligente Samsung Galaxy</h3>
-                        <div class="product-price">$180</div>
-                        <div class="product-seller">
-                            <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Vendedor" class="seller-avatar">
-                            <span>Carlos Gómez</span>
-                        </div>
-                        <a href="https://wa.me/15551234569?text=Hola%20Carlos,%20estoy%20interesado%20en%20el%20reloj%20Samsung" class="whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Zapatos" class="product-img">
-                    <div class="product-info">
-                        <div class="product-category">Moda</div>
-                        <h3 class="product-title">Zapatos Deportivos Nike Air Max</h3>
-                        <div class="product-price">$95</div>
-                        <div class="product-seller">
-                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Vendedora" class="seller-avatar">
-                            <span>Laura Martínez</span>
-                        </div>
-                        <a href="https://wa.me/15551234570?text=Hola%20Laura,%20estoy%20interesado%20en%20los%20zapatos%20Nike" class="whatsapp-btn" target="_blank">
-                            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
-                        </a>
-                    </div>
-                </div>
+            <div class="products-grid" id="products-grid">
+                <!-- Los productos se cargarán dinámicamente -->
             </div>
         </div>
     </section>
@@ -702,6 +719,15 @@
         <div class="tabs">
             <button class="tab-btn active" data-tab="login">Iniciar Sesión</button>
             <button class="tab-btn" data-tab="register">Registrarse</button>
+        </div>
+        
+        <!-- Alert Messages -->
+        <div id="alert-message" class="alert" style="display: none;"></div>
+        
+        <!-- Loader -->
+        <div id="loader" class="loader" style="display: none;">
+            <div class="loader-spinner"></div>
+            <p>Procesando...</p>
         </div>
         
         <div class="tab-content active" id="login-content">
@@ -747,6 +773,73 @@
                     <button type="submit" class="btn">Crear Cuenta</button>
                 </form>
             </div>
+        </div>
+    </section>
+
+    <!-- Seller Dashboard -->
+    <section class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <div class="section-title">
+                <h2>Mi Panel de Vendedor</h2>
+                <p>Gestiona tus productos y ventas</p>
+            </div>
+            <div class="dashboard-actions">
+                <button class="btn" id="new-product-btn">
+                    <i class="fas fa-plus"></i> Nuevo Producto
+                </button>
+                <button class="btn btn-outline" id="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+        
+        <!-- New Product Form -->
+        <div class="product-form" id="product-form" style="display: none;">
+            <h3>Publicar Nuevo Producto</h3>
+            <form id="publish-form">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="product-name">Nombre del Producto</label>
+                            <input type="text" id="product-name" class="form-control" placeholder="Ej: iPhone 12 Pro Max" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-price">Precio ($)</label>
+                            <input type="number" id="product-price" class="form-control" placeholder="Ej: 850" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-category">Categoría</label>
+                            <select id="product-category" class="form-control" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Tecnología">Tecnología</option>
+                                <option value="Moda">Moda</option>
+                                <option value="Hogar">Hogar</option>
+                                <option value="Deportes">Deportes</option>
+                                <option value="Vehiculos">Vehículos</option>
+                                <option value="Otros">Otros</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="product-description">Descripción</label>
+                            <textarea id="product-description" class="form-control" rows="5" placeholder="Describe tu producto..." required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-image">Imagen (URL)</label>
+                            <input type="text" id="product-image" class="form-control" placeholder="https://..." required>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn">Publicar Producto</button>
+            </form>
+        </div>
+        
+        <div class="section-title">
+            <h3>Mis Productos Publicados</h3>
+        </div>
+        <div class="products-grid" id="my-products-grid">
+            <!-- Los productos del usuario se cargarán aquí -->
         </div>
     </section>
 
@@ -797,8 +890,30 @@
         </div>
     </footer>
 
-    <script>
-        // Firebase Configuration (Replace with your own config)
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { 
+            getAuth, 
+            createUserWithEmailAndPassword, 
+            signInWithEmailAndPassword,
+            sendPasswordResetEmail,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { 
+            getFirestore, 
+            doc, 
+            setDoc, 
+            serverTimestamp,
+            collection,
+            addDoc,
+            query,
+            where,
+            getDocs
+        } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Configuración de Firebase (REEMPLAZA CON TUS DATOS)
         const firebaseConfig = {
             apiKey: "AIzaSyD3wwF3-E02dRP7Z8MH1k11UeR_pVqL66k",
             authDomain: "tienda-e1a2e.firebaseapp.com",
@@ -809,10 +924,39 @@
             appId: "1:706488670782:web:226c0feaa3cf3213b50f6f"
         };
 
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Referencias a elementos del DOM
+        const dashboardSection = document.getElementById('dashboard');
+        const registrationSection = document.getElementById('vender');
+        const productsSection = document.getElementById('productos');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const newProductBtn = document.getElementById('new-product-btn');
+        const productForm = document.getElementById('product-form');
+        const publishForm = document.getElementById('publish-form');
+        const myProductsGrid = document.getElementById('my-products-grid');
+        const productsGrid = document.getElementById('products-grid');
+
+        // Funciones para mostrar/ocultar alertas y loader
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alert-message');
+            alertDiv.textContent = message;
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.display = 'block';
+            
+            // Ocultar después de 5 segundos
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        function showLoader(show) {
+            document.getElementById('loader').style.display = show ? 'block' : 'none';
+        }
 
         // Mobile Menu Toggle
         document.getElementById('mobile-menu').addEventListener('click', function() {
@@ -839,27 +983,26 @@
         });
 
         // Login Form Submission
-        document.getElementById('login-form').addEventListener('submit', function(e) {
+        document.getElementById('login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
             
-            auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed in
-                    alert('¡Inicio de sesión exitoso!');
-                    // Redirect to profile page
-                    window.location.href = 'profile.html';
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(`Error: ${errorMessage}`);
-                });
+            showLoader(true);
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showAlert('¡Inicio de sesión exitoso!', 'success');
+                showLoader(false);
+            } catch (error) {
+                showLoader(false);
+                console.error("Error en inicio de sesión:", error);
+                showAlert(`Error: ${error.message}`, 'error');
+            }
         });
 
         // Registration Form Submission
-        document.getElementById('register-form').addEventListener('submit', function(e) {
+        document.getElementById('register-form').addEventListener('submit', async function(e) {
             e.preventDefault();
             const name = document.getElementById('register-name').value;
             const email = document.getElementById('register-email').value;
@@ -868,48 +1011,74 @@
             const confirmPassword = document.getElementById('register-confirm').value;
             
             if (password !== confirmPassword) {
-                alert('Las contraseñas no coinciden');
+                showAlert('Las contraseñas no coinciden', 'error');
                 return;
             }
             
-            auth.createUserWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    // Signed up 
-                    const user = userCredential.user;
-                    
-                    // Save additional user data to Firestore
-                    return db.collection('users').doc(user.uid).set({
-                        name: name,
-                        email: email,
-                        phone: phone,
-                        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                    });
-                })
-                .then(() => {
-                    alert('¡Cuenta creada con éxito!');
-                    // Redirect to profile page
-                    window.location.href = 'profile.html';
-                })
-                .catch((error) => {
-                    const errorCode = error.code;
-                    const errorMessage = error.message;
-                    alert(`Error: ${errorMessage}`);
+            if (password.length < 6) {
+                showAlert('La contraseña debe tener al menos 6 caracteres', 'error');
+                return;
+            }
+            
+            showLoader(true);
+            
+            try {
+                // Crear usuario en autenticación
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                
+                // Guardar datos adicionales en Firestore
+                const user = userCredential.user;
+                await setDoc(doc(db, "users", user.uid), {
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    createdAt: serverTimestamp()
                 });
+                
+                showLoader(false);
+                showAlert('¡Cuenta creada con éxito! Bienvenido a MarketWhats', 'success');
+                
+                // Cambiar a pestaña de inicio de sesión después de registro
+                setTimeout(() => {
+                    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                    
+                    document.querySelector('.tab-btn[data-tab="login"]').classList.add('active');
+                    document.getElementById('login-content').classList.add('active');
+                    
+                    // Autocompletar email en login
+                    document.getElementById('login-email').value = email;
+                }, 2000);
+                
+            } catch (error) {
+                showLoader(false);
+                console.error("Error en registro:", error);
+                
+                // Mensajes de error personalizados
+                if (error.code === 'auth/email-already-in-use') {
+                    showAlert('Este correo electrónico ya está registrado', 'error');
+                } else if (error.code === 'auth/weak-password') {
+                    showAlert('La contraseña es demasiado débil', 'error');
+                } else if (error.code === 'auth/invalid-email') {
+                    showAlert('El correo electrónico no es válido', 'error');
+                } else {
+                    showAlert(`Error: ${error.message}`, 'error');
+                }
+            }
         });
 
         // Password Reset
-        document.querySelector('.forgot-password').addEventListener('click', function(e) {
+        document.querySelector('.forgot-password').addEventListener('click', async function(e) {
             e.preventDefault();
             const email = prompt('Por favor ingresa tu correo electrónico para restablecer tu contraseña:');
             
             if (email) {
-                auth.sendPasswordResetEmail(email)
-                    .then(() => {
-                        alert('Se ha enviado un correo electrónico para restablecer tu contraseña. Por favor revisa tu bandeja de entrada.');
-                    })
-                    .catch((error) => {
-                        alert(`Error: ${error.message}`);
-                    });
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    showAlert('Se ha enviado un correo electrónico para restablecer tu contraseña. Por favor revisa tu bandeja de entrada.', 'success');
+                } catch (error) {
+                    showAlert(`Error: ${error.message}`, 'error');
+                }
             }
         });
 
@@ -917,9 +1086,219 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Verificar estado de autenticación
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                console.log("Usuario autenticado:", user.uid);
+                loginBtn.textContent = "Mi Cuenta";
+                
+                // Mostrar dashboard y ocultar sección de registro
+                dashboardSection.style.display = 'block';
+                registrationSection.style.display = 'none';
+                
+                // Cargar productos del usuario
+                await loadUserProducts(user.uid);
+                
+                // Cargar todos los productos
+                await loadAllProducts();
+            } else {
+                console.log("Usuario no autenticado");
+                loginBtn.textContent = "Iniciar Sesión";
+                
+                // Ocultar dashboard y mostrar sección de registro
+                dashboardSection.style.display = 'none';
+                registrationSection.style.display = 'block';
+                
+                // Cargar todos los productos
+                await loadAllProducts();
+            }
+        });
+
+        // Toggle formulario de nuevo producto
+        newProductBtn.addEventListener('click', () => {
+            productForm.style.display = productForm.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Publicar nuevo producto
+        publishForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const user = auth.currentUser;
+            if (!user) {
+                showAlert('Debes iniciar sesión para publicar productos', 'error');
+                return;
+            }
+            
+            const productName = document.getElementById('product-name').value;
+            const productPrice = document.getElementById('product-price').value;
+            const productCategory = document.getElementById('product-category').value;
+            const productDescription = document.getElementById('product-description').value;
+            const productImage = document.getElementById('product-image').value;
+            
+            showLoader(true);
+            
+            try {
+                // Guardar producto en Firestore
+                await addDoc(collection(db, "products"), {
+                    name: productName,
+                    price: parseFloat(productPrice),
+                    category: productCategory,
+                    description: productDescription,
+                    image: productImage,
+                    sellerId: user.uid,
+                    createdAt: serverTimestamp()
                 });
+                
+                showLoader(false);
+                showAlert('¡Producto publicado con éxito!', 'success');
+                
+                // Limpiar formulario
+                publishForm.reset();
+                productForm.style.display = 'none';
+                
+                // Recargar productos del usuario
+                await loadUserProducts(user.uid);
+                
+                // Recargar todos los productos
+                await loadAllProducts();
+                
+            } catch (error) {
+                showLoader(false);
+                console.error("Error al publicar producto:", error);
+                showAlert(`Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Cerrar sesión
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showAlert('Sesión cerrada correctamente', 'success');
+            } catch (error) {
+                console.error("Error al cerrar sesión:", error);
+                showAlert(`Error: ${error.message}`, 'error');
+            }
+        });
+
+        // Cargar productos del usuario
+        async function loadUserProducts(userId) {
+            myProductsGrid.innerHTML = '';
+            
+            try {
+                const q = query(collection(db, "products"), where("sellerId", "==", userId));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    myProductsGrid.innerHTML = '<p>No has publicado ningún producto aún.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach((doc) => {
+                    const product = doc.data();
+                    addProductToGrid(product, myProductsGrid, true);
+                });
+                
+            } catch (error) {
+                console.error("Error al cargar productos del usuario:", error);
+                showAlert(`Error al cargar productos: ${error.message}`, 'error');
+            }
+        }
+
+        // Cargar todos los productos
+        async function loadAllProducts() {
+            productsGrid.innerHTML = '';
+            
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                
+                if (querySnapshot.empty) {
+                    productsGrid.innerHTML = '<p>No hay productos disponibles en este momento.</p>';
+                    return;
+                }
+                
+                querySnapshot.forEach((doc) => {
+                    const product = doc.data();
+                    addProductToGrid(product, productsGrid, false);
+                });
+                
+            } catch (error) {
+                console.error("Error al cargar productos:", error);
+                showAlert(`Error al cargar productos: ${error.message}`, 'error');
+            }
+        }
+
+        // Añadir producto a la cuadrícula
+        function addProductToGrid(product, grid, isOwner) {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            
+            let actionsHTML = '';
+            if (isOwner) {
+                actionsHTML = `
+                    <div style="margin-top: 10px; display: flex; gap: 10px;">
+                        <button class="btn" style="background-color: #4CAF50; padding: 8px;">
+                            <i class="fas fa-edit"></i> Editar
+                        </button>
+                        <button class="btn" style="background-color: #f44336; padding: 8px;">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </button>
+                    </div>
+                `;
+            }
+            
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-img">
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <div class="product-price">$${product.price.toFixed(2)}</div>
+                    <p>${product.description}</p>
+                    <div class="product-seller">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Vendedor" class="seller-avatar">
+                        <span>${isOwner ? 'Tú' : 'Vendedor'}</span>
+                    </div>
+                    <a href="https://wa.me/15551234567?text=Hola%20estoy%20interesado%20en%20${encodeURIComponent(product.name)}" 
+                       class="whatsapp-btn" target="_blank">
+                        <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+                    </a>
+                    ${actionsHTML}
+                </div>
+            `;
+            
+            grid.appendChild(productCard);
+        }
+
+        // Cargar algunos productos de ejemplo iniciales
+        window.addEventListener('DOMContentLoaded', async () => {
+            // Simular carga de productos mientras se inicializa Firebase
+            const exampleProducts = [
+                {
+                    name: "iPhone 12 Pro Max 256GB",
+                    price: 850,
+                    category: "Tecnología",
+                    description: "iPhone 12 Pro Max en excelente estado, con 256GB de almacenamiento. Incluye cargador y estuche.",
+                    image: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
+                },
+                {
+                    name: "Bicicleta Montañera Profesional",
+                    price: 320,
+                    category: "Deportes",
+                    description: "Bicicleta profesional para montaña, apenas usada. Incluye accesorios de seguridad.",
+                    image: "https://images.unsplash.com/photo-1566150902887-9679ecc155ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80"
+                }
+            ];
+            
+            exampleProducts.forEach(product => {
+                addProductToGrid(product, productsGrid, false);
             });
         });
     </script>
